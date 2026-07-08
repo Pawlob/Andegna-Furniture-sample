@@ -297,7 +297,7 @@ export default function Page() {
                     <img className="willem__cover-image-extra is--1" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="" />
                     <img className="willem__cover-image-extra is--2" src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="" />
                     <img className="willem__cover-image-extra is--3" src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="" />
-                    <img className="willem__cover-image" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=1200" loading="lazy" alt="" />
+                    <img className="willem__cover-image" src="https://i.postimg.cc/1XV8Sp7d/mixboard-image-(5).png" loading="lazy" alt="" />
                   </div>
                 </div>
               </div>

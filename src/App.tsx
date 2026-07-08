@@ -68,10 +68,10 @@ export default function App() {
               <div className="willem-loader__box-inner">
                 <div className="willem__growing-image">
                   <div className="willem__growing-image-wrap">
-                    <img className="willem__cover-image-extra is--1" src="https://smilespecialtydentalclinic.com/wp-content/uploads/2023/04/doc-4-640x640.jpg" loading="lazy" alt="" />
-                    <img className="willem__cover-image-extra is--2" src="https://smilespecialtydentalclinic.com/wp-content/uploads/2023/04/doc-3-320x320.jpg" loading="lazy" alt="" />
-                    <img className="willem__cover-image-extra is--3" src="https://smilespecialtydentalclinic.com/wp-content/uploads/2026/03/DSC07486-1-640x640.webp" loading="lazy" alt="" />
-                    <img className="willem__cover-image" src="https://i.postimg.cc/g0F5gFdz/smile11.png" loading="lazy" alt="" />
+                    <img className="willem__cover-image-extra is--1" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="" />
+                    <img className="willem__cover-image-extra is--2" src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="" />
+                    <img className="willem__cover-image-extra is--3" src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="" />
+                    <img className="willem__cover-image" src="https://i.postimg.cc/1XV8Sp7d/mixboard-image-(5).png" loading="lazy" alt="" />
                   </div>
                 </div>
               </div>

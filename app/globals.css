@@ -41,6 +41,12 @@ main:has(.willem-header.is--loading) {
   visibility: hidden;
 }
 
+/* Hide letters after loading completes but keep background image */
+.willem-header:not(.is--loading) .willem__h1-start,
+.willem-header:not(.is--loading) .willem__h1-end {
+  display: none !important;
+}
+
 .willem-loader {
   color: #201d1d;
   justify-content: center;
