@@ -38,7 +38,7 @@ main:has(.willem-header.is--loading) {
 
 /* Loading: Hidden */
 .willem-header.is--loading.is--hidden {
-  display: none;
+  visibility: hidden;
 }
 
 .willem-loader {
