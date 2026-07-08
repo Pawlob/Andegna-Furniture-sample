@@ -28,6 +28,8 @@ import {
 
 gsap.registerPlugin(useGSAP);
 
+import HeroGallery from '@/components/HeroGallery';
+
 interface Product {
   id: string;
   name: string;
@@ -103,7 +105,7 @@ const WOOD_OPTIONS = [
 
 const FABRIC_OPTIONS = [
   { id: 'cotton', name: 'Artisanal Handwoven Cotton', cost: 120, color: '#F1E9D2', desc: 'Beautifully textured, off-white heavy heritage weave.' },
-  { id: 'velvet', name: 'Imperial Forest Velvet', cost: 180, color: '#0F4C3A', desc: 'Extremely soft velvet with a rich deep emerald sheen.' },
+  { id: 'velvet', name: 'Golden Amber Velvet', cost: 180, color: '#cfa253', desc: 'Lustrous, heavy-weight velvet with a warm golden amber sheen.' },
   { id: 'leather', name: 'Premium Cognac Leather', cost: 250, color: '#8E4A21', desc: 'Buttery-soft full-grain leather that patinas beautifully over time.' },
 ];
 
@@ -132,6 +134,7 @@ export default function Page() {
   const [inquiries, setInquiries] = useState<CustomInquiry[]>([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   
   // Lead submission form
   const [showInquiryForm, setShowInquiryForm] = useState(false);
@@ -180,6 +183,15 @@ export default function Page() {
       },
       onComplete: () => {
         container.classList.remove('is--loading');
+        gsap.to(container, {
+          opacity: 0,
+          y: -80,
+          duration: 1.0,
+          ease: 'power3.inOut',
+          onComplete: () => {
+            setIsLoaded(true);
+          }
+        });
       }
     });
 
@@ -281,60 +293,63 @@ export default function Page() {
     : PRODUCTS.filter(p => p.category === activeCategory);
 
   return (
-    <main className="bg-[#fcfaf7] min-h-screen text-[#1c1a1a] overflow-x-hidden selection:bg-[#1c1a1a] selection:text-[#fcfaf7]">
-      {/* GSAP Header with original loader branding */}
-      <section className="willem-header is--loading is--hidden" ref={containerRef as any}>
-        <div className="willem-loader">
-          <div className="willem__h1">
-            <div className="willem__h1-start">
-              <span className="willem__letter font-amharic-bold">አ</span>
-              <span className="willem__letter font-amharic-bold">ን</span>
-            </div>
-            <div className="willem-loader__box">
-              <div className="willem-loader__box-inner">
-                <div className="willem__growing-image">
-                  <div className="willem__growing-image-wrap">
-                    <img className="willem__cover-image-extra is--1" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="" />
-                    <img className="willem__cover-image-extra is--2" src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="" />
-                    <img className="willem__cover-image-extra is--3" src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="" />
-                    <img className="willem__cover-image" src="https://i.postimg.cc/1XV8Sp7d/mixboard-image-(5).png" loading="lazy" alt="" />
+    <main className="bg-[#fcfaf7] min-h-screen text-[#121110] overflow-x-hidden selection:bg-[#d4af37] selection:text-[#121110]">
+      {!isLoaded ? (
+        <section className="willem-header is--loading is--hidden" ref={containerRef as any}>
+          <div className="willem-loader">
+            <div className="willem__h1">
+              <div className="willem__h1-start">
+                <span className="willem__letter font-amharic-bold">አ</span>
+                <span className="willem__letter font-amharic-bold">ን</span>
+              </div>
+              <div className="willem-loader__box">
+                <div className="willem-loader__box-inner">
+                  <div className="willem__growing-image">
+                    <div className="willem__growing-image-wrap">
+                      <img className="willem__cover-image-extra is--1" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="" />
+                      <img className="willem__cover-image-extra is--2" src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="" />
+                      <img className="willem__cover-image-extra is--3" src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="" />
+                      <img className="willem__cover-image" src="https://i.postimg.cc/1XV8Sp7d/mixboard-image-(5).png" loading="lazy" alt="" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="willem__h1-end">
-              <span className="willem__letter font-amharic-bold">ደ</span>
-              <span className="willem__letter font-amharic-bold">ኛ</span>
-            </div>
-          </div>
-        </div>
-        <div className="willem-header__content">
-          <div className="flex-grow" />
-          <div className="willem-header__bottom" style={{ marginTop: '0px', paddingLeft: '0px', marginBottom: '-60px' }}>
-            <div className="willem__h1 h-[2.4em] lg:h-[1.5em] flex items-center overflow-hidden">
-              <img 
-                src="https://andegnafurniture.com/wp-content/uploads/2022/07/logo-final-300x169.png.webp" 
-                alt="Andegna" 
-                className="willem__letter-white h-full w-auto object-contain"
-                referrerPolicy="no-referrer"
-              />
+              <div className="willem__h1-end">
+                <span className="willem__letter font-amharic-bold">ደ</span>
+                <span className="willem__letter font-amharic-bold">ኛ</span>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+          <div className="willem-header__content">
+            <div className="flex-grow" />
+            <div className="willem-header__bottom" style={{ marginTop: '0px', paddingLeft: '0px', marginBottom: '-60px' }}>
+              <div className="willem__h1 h-[2.4em] lg:h-[1.5em] flex items-center overflow-hidden">
+                <img 
+                  src="https://andegnafurniture.com/wp-content/uploads/2022/07/logo-final-300x169.png.webp" 
+                  alt="Andegna" 
+                  className="willem__letter-white h-full w-auto object-contain"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : (
+        <>
+          <HeroGallery />
 
       {/* Floating Design Inquiries Badge */}
       {isMounted && inquiries.length > 0 && (
         <button 
           onClick={() => setIsDrawerOpen(true)}
-          className="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#1c1a1a] text-white px-6 py-4 rounded-full shadow-2xl hover:bg-black transition-all duration-300 hover:scale-105 active:scale-95 group"
+          className="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-[#121110] text-[#d4af37] border border-[#d4af37]/30 px-6 py-4 rounded-full shadow-2xl hover:bg-[#1a1410] hover:border-[#d4af37] transition-all duration-300 hover:scale-105 active:scale-95 group"
           id="floating-cart-btn"
         >
-          <ShoppingBag className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
-          <span className="text-sm font-medium tracking-wider uppercase">Inquiries ({inquiries.length})</span>
+          <ShoppingBag className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300 text-[#d4af37]" />
+          <span className="text-sm font-medium tracking-wider uppercase font-mono">Inquiries ({inquiries.length})</span>
           <span className="flex h-2.5 w-2.5 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-400"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4af37] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#d4af37]"></span>
           </span>
         </button>
       )}
@@ -343,14 +358,14 @@ export default function Page() {
       <section className="relative w-full py-24 px-6 md:px-12 lg:px-24">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
-          <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-black/10 pb-12">
+          <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-[#4a3525]/10 pb-12">
             <div className="max-w-2xl">
-              <span className="text-xs uppercase tracking-widest text-[#1c1a1a]/40 font-medium block mb-3 font-mono">Collection Showcase</span>
+              <span className="text-xs uppercase tracking-widest text-[#8b5a2b] font-medium block mb-3 font-mono">Collection Showcase</span>
               <h2 className="text-5xl md:text-7xl font-light tracking-tight font-amharic-bold mb-6">
                 Curated<br />
-                <span className="italic font-serif text-[#1c1a1a]/50">Luxe Living.</span>
+                <span className="italic font-serif text-[#cfa253]">Luxe Living.</span>
               </h2>
-              <p className="text-lg md:text-xl text-[#1c1a1a]/60 leading-relaxed font-light">
+              <p className="text-lg md:text-xl text-[#121110]/70 leading-relaxed font-light">
                 Exceptional bespoke design for modern residential and executive spaces. Handcrafted in Ethiopia using premium timber and rich, textured materials.
               </p>
             </div>
@@ -363,8 +378,8 @@ export default function Page() {
                   onClick={() => setActiveCategory(cat)}
                   className={`rounded-full px-6 py-3 text-xs tracking-widest uppercase transition-all duration-300 ${
                     activeCategory === cat 
-                      ? 'bg-[#1c1a1a] text-white' 
-                      : 'border border-black/10 text-[#1c1a1a] hover:border-[#1c1a1a] hover:bg-[#1c1a1a]/5'
+                      ? 'bg-[#121110] text-[#d4af37] border border-[#d4af37]' 
+                      : 'border border-[#4a3525]/20 text-[#121110] hover:border-[#d4af37] hover:bg-[#121110]/5'
                   }`}
                 >
                   {cat === 'all' ? 'All Pieces' : cat}
@@ -378,7 +393,7 @@ export default function Page() {
             {filteredProducts.map((product) => (
               <div 
                 key={product.id} 
-                className="group flex flex-col justify-between bg-white rounded-3xl p-5 border border-black/5 hover:border-black/10 transition-all duration-300 hover:shadow-[0_20px_50px_rgba(0,0,0,0.04)]"
+                className="group flex flex-col justify-between bg-white rounded-3xl p-5 border border-[#4a3525]/10 hover:border-[#d4af37]/50 transition-all duration-300 hover:shadow-[0_20px_50px_rgba(74,53,37,0.05)]"
               >
                 <div>
                   <div className="relative aspect-[4/5] overflow-hidden rounded-2xl mb-6 bg-gray-50">
@@ -391,21 +406,21 @@ export default function Page() {
                     <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500" />
                     
                     {/* Category pill */}
-                    <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-black px-4 py-1.5 rounded-full text-[10px] tracking-widest uppercase font-mono font-bold">
+                    <span className="absolute top-4 left-4 bg-[#121110]/90 backdrop-blur-md text-[#d4af37] border border-[#d4af37]/30 px-4 py-1.5 rounded-full text-[10px] tracking-widest uppercase font-mono font-bold">
                       {product.category}
                     </span>
                   </div>
                   
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-medium tracking-tight font-amharic-bold">{product.name}</h3>
-                    <span className="text-sm font-semibold tracking-wider font-mono">From ${product.basePrice}</span>
+                    <span className="text-sm font-semibold tracking-wider font-mono text-[#8b5a2b]">From ${product.basePrice}</span>
                   </div>
-                  <p className="text-[#1c1a1a]/60 text-sm leading-relaxed mb-6 font-light">{product.description}</p>
+                  <p className="text-[#121110]/60 text-sm leading-relaxed mb-6 font-light">{product.description}</p>
                 </div>
 
                 <button 
                   onClick={() => handleOpenCustomizer(product)}
-                  className="w-full rounded-full border border-[#1c1a1a]/20 py-4 text-xs tracking-widest uppercase hover:bg-[#1c1a1a] hover:text-white transition-colors duration-300 flex items-center justify-center gap-2 group-hover:border-[#1c1a1a]"
+                  className="w-full rounded-full border border-[#4a3525]/20 py-4 text-xs tracking-widest uppercase text-[#121110] hover:bg-[#121110] hover:text-[#d4af37] hover:border-[#d4af37] transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-[#4a3525]"
                 >
                   <Sliders className="w-4 h-4" />
                   Customize & Estimate
@@ -417,19 +432,19 @@ export default function Page() {
       </section>
 
       {/* Heritage Bento Grid */}
-      <section className="relative w-full bg-[#1c1a1a] text-[#fcfaf7] py-24 px-6 md:px-12 lg:px-24 rounded-t-[3rem] z-20">
+      <section className="relative w-full bg-[#121110] text-[#fcfaf7] py-24 px-6 md:px-12 lg:px-24 rounded-t-[3rem] z-20">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mb-16 md:mb-24">
             <span className="text-xs uppercase tracking-widest text-[#fcfaf7]/40 font-medium block mb-3 font-mono">Heritage & Philosophy</span>
             <h2 className="text-4xl md:text-6xl font-light tracking-tight font-amharic-bold">
               The Convergence of <br />
-              <span className="italic font-serif text-yellow-400">Cultural Artistry</span> & Luxury.
+              <span className="italic font-serif text-[#d4af37]">Cultural Artistry</span> & Luxury.
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-[#2a2727] p-8 md:p-10 rounded-3xl flex flex-col justify-between h-96 hover:translate-y-[-4px] transition-transform duration-300">
-              <Compass className="w-10 h-10 text-yellow-400" />
+            <div className="bg-[#1c1510] border border-[#d4af37]/10 hover:border-[#d4af37]/40 p-8 md:p-10 rounded-3xl flex flex-col justify-between h-96 hover:translate-y-[-4px] transition-all duration-300">
+              <Compass className="w-10 h-10 text-[#d4af37]" />
               <div>
                 <h3 className="text-2xl font-medium mb-3 font-amharic-bold">Sourcing</h3>
                 <p className="text-[#fcfaf7]/60 text-sm leading-relaxed">
@@ -438,8 +453,8 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="bg-[#2a2727] p-8 md:p-10 rounded-3xl flex flex-col justify-between h-96 hover:translate-y-[-4px] transition-transform duration-300">
-              <Sparkles className="w-10 h-10 text-yellow-400" />
+            <div className="bg-[#1c1510] border border-[#d4af37]/10 hover:border-[#d4af37]/40 p-8 md:p-10 rounded-3xl flex flex-col justify-between h-96 hover:translate-y-[-4px] transition-all duration-300">
+              <Sparkles className="w-10 h-10 text-[#d4af37]" />
               <div>
                 <h3 className="text-2xl font-medium mb-3 font-amharic-bold">Cultural Craft</h3>
                 <p className="text-[#fcfaf7]/60 text-sm leading-relaxed">
@@ -448,8 +463,8 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="bg-[#2a2727] p-8 md:p-10 rounded-3xl flex flex-col justify-between h-96 hover:translate-y-[-4px] transition-transform duration-300">
-              <ArrowRight className="w-10 h-10 text-yellow-400" />
+            <div className="bg-[#1c1510] border border-[#d4af37]/10 hover:border-[#d4af37]/40 p-8 md:p-10 rounded-3xl flex flex-col justify-between h-96 hover:translate-y-[-4px] transition-all duration-300">
+              <ArrowRight className="w-10 h-10 text-[#d4af37]" />
               <div>
                 <h3 className="text-2xl font-medium mb-3 font-amharic-bold">Bespoke Fit</h3>
                 <p className="text-[#fcfaf7]/60 text-sm leading-relaxed">
@@ -462,40 +477,40 @@ export default function Page() {
       </section>
 
       {/* Showrooms & Info */}
-      <section className="relative w-full py-24 px-6 md:px-12 lg:px-24 bg-[#fcfaf7]">
+      <section className="relative w-full py-24 px-6 md:px-12 lg:px-24 bg-[#fbf9f4]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <span className="text-xs uppercase tracking-widest text-[#1c1a1a]/40 font-medium block mb-3 font-mono">Showroom Location</span>
+            <span className="text-xs uppercase tracking-widest text-[#8b5a2b] font-medium block mb-3 font-mono">Showroom Location</span>
             <h2 className="text-4xl md:text-5xl font-light tracking-tight font-amharic-bold mb-8">
               Experience the Craft <br />
-              <span className="italic font-serif">In Person.</span>
+              <span className="italic font-serif text-[#8b5a2b]">In Person.</span>
             </h2>
-            <p className="text-lg text-[#1c1a1a]/60 leading-relaxed mb-12 font-light">
+            <p className="text-lg text-[#121110]/70 leading-relaxed mb-12 font-light">
               Visit our luxury showroom in Addis Ababa to feel the rich grain of Abyssinian Walnut and select custom handwoven cotton fabrics in collaboration with our designers.
             </p>
 
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <MapPin className="w-6 h-6 text-[#1c1a1a]/60 mt-1" />
+                <MapPin className="w-6 h-6 text-[#8b5a2b] mt-1" />
                 <div>
                   <h4 className="font-bold uppercase tracking-wider text-xs">Flagship Showroom</h4>
-                  <p className="text-[#1c1a1a]/60 text-sm mt-1">Bole Road, Next to Andegna Plaza, Addis Ababa, Ethiopia</p>
+                  <p className="text-[#121110]/70 text-sm mt-1">Bole Road, Next to Andegna Plaza, Addis Ababa, Ethiopia</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <Phone className="w-6 h-6 text-[#1c1a1a]/60 mt-1" />
+                <Phone className="w-6 h-6 text-[#8b5a2b] mt-1" />
                 <div>
                   <h4 className="font-bold uppercase tracking-wider text-xs">Contact Inquiries</h4>
-                  <p className="text-[#1c1a1a]/60 text-sm mt-1">+251 911 234 567</p>
+                  <p className="text-[#121110]/70 text-sm mt-1">+251 911 234 567</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <Mail className="w-6 h-6 text-[#1c1a1a]/60 mt-1" />
+                <Mail className="w-6 h-6 text-[#8b5a2b] mt-1" />
                 <div>
                   <h4 className="font-bold uppercase tracking-wider text-xs">Email Correspondence</h4>
-                  <p className="text-[#1c1a1a]/60 text-sm mt-1">info@andegnafurniture.com</p>
+                  <p className="text-[#121110]/70 text-sm mt-1">info@andegnafurniture.com</p>
                 </div>
               </div>
             </div>
@@ -513,11 +528,11 @@ export default function Page() {
       </section>
 
       {/* Footer / Call to Action */}
-      <section className="relative w-full bg-[#141414] text-white py-24 px-6 md:px-12 lg:px-24 rounded-t-[3rem] -mt-12 overflow-hidden z-10">
+      <section className="relative w-full bg-[#0e0c0b] border-t border-[#d4af37]/20 text-white py-24 px-6 md:px-12 lg:px-24 rounded-t-[3rem] -mt-12 overflow-hidden z-10">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
           <h2 className="text-5xl md:text-8xl lg:text-[10rem] font-medium tracking-tighter font-amharic-bold leading-[0.8] mb-8">
             <span className="opacity-50">Spaces that</span><br />
-            INSPIRE.
+            <span className="text-[#d4af37]">INSPIRE.</span>
           </h2>
           
           <p className="text-lg md:text-xl text-white/60 mb-12 max-w-xl font-amharic-light">
@@ -534,17 +549,17 @@ export default function Page() {
                 window.scrollTo({ top: 800, behavior: 'smooth' });
               }
             }}
-            className="rounded-full bg-white text-black px-10 py-5 text-sm tracking-widest uppercase hover:bg-white/90 hover:scale-105 transition-all duration-300 mb-24 font-bold"
+            className="rounded-full bg-[#d4af37] text-black border border-[#b8952d] px-10 py-5 text-sm tracking-widest uppercase hover:bg-[#cfa253] hover:scale-105 transition-all duration-300 mb-24 font-bold"
           >
             Start Customization
           </button>
 
-          <div className="w-full border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs tracking-widest uppercase text-white/40 font-mono">
+          <div className="w-full border-t border-[#d4af37]/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs tracking-widest uppercase text-white/40 font-mono">
             <span>© 2026 Andegna Furniture</span>
             <div className="flex gap-8">
-              <a href="#" className="hover:text-white transition-colors">Instagram</a>
-              <a href="#" className="hover:text-white transition-colors">Facebook</a>
-              <a href="#" className="hover:text-white transition-colors">Contact</a>
+              <a href="#" className="hover:text-[#d4af37] transition-colors">Instagram</a>
+              <a href="#" className="hover:text-[#d4af37] transition-colors">Facebook</a>
+              <a href="#" className="hover:text-[#d4af37] transition-colors">Contact</a>
             </div>
           </div>
         </div>
@@ -553,24 +568,24 @@ export default function Page() {
       {/* CUSTOMIZER MODAL */}
       {customizingProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 animate-fade-in">
-          <div className="relative bg-[#fcfaf7] text-[#1c1a1a] rounded-3xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col lg:flex-row">
+          <div className="relative bg-[#fcfaf7] text-[#121110] rounded-3xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col lg:flex-row border border-[#d4af37]/20">
             
             {/* Modal close */}
             <button 
               onClick={() => setCustomizingProduct(null)}
-              className="absolute top-6 right-6 z-10 bg-white/80 hover:bg-white border border-black/10 text-black p-3 rounded-full hover:scale-105 active:scale-95 transition-all duration-300"
+              className="absolute top-6 right-6 z-10 bg-white/85 hover:bg-[#121110] hover:text-[#d4af37] border border-[#4a3525]/15 text-black p-3 rounded-full hover:scale-105 active:scale-95 transition-all duration-300"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Product Image & Details Side */}
-            <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-between bg-white border-r border-black/5">
+            <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-between bg-white border-r border-[#4a3525]/5">
               <div>
-                <span className="text-[10px] tracking-widest uppercase font-mono text-[#1c1a1a]/50 block mb-3 font-bold">
+                <span className="text-[10px] tracking-widest uppercase font-mono text-[#8b5a2b] block mb-3 font-bold">
                   Bespoke Configurator
                 </span>
                 <h3 className="text-3xl font-light font-amharic-bold mb-4">{customizingProduct.name}</h3>
-                <p className="text-sm text-[#1c1a1a]/60 leading-relaxed mb-6">
+                <p className="text-sm text-[#121110]/60 leading-relaxed mb-6">
                   {customizingProduct.description}
                 </p>
                 
@@ -585,25 +600,25 @@ export default function Page() {
               </div>
 
               {/* Instant Price Card */}
-              <div className="mt-8 bg-[#fcfaf7] border border-black/5 p-6 rounded-2xl flex justify-between items-center">
+              <div className="mt-8 bg-[#fcfaf7] border border-[#d4af37]/20 p-6 rounded-2xl flex justify-between items-center shadow-sm">
                 <div>
-                  <span className="text-[10px] tracking-widest uppercase font-mono block text-black/40">Estimated Price</span>
-                  <span className="text-3xl font-bold tracking-tight font-mono text-[#1c1a1a]">
+                  <span className="text-[10px] tracking-widest uppercase font-mono block text-[#8b5a2b]">Estimated Price</span>
+                  <span className="text-3xl font-bold tracking-tight font-mono text-[#d4af37]">
                     ${calculatePrice(customizingProduct, selectedWood, selectedFabric, customWidth, customDepth)}
                   </span>
                 </div>
-                <div className="text-right text-[10px] text-black/50 font-mono">
-                  Includes wood, fabric,<br />and custom sizing.
+                <div className="text-right text-[10px] text-[#8b5a2b]/70 font-mono">
+                  Includes premium wood,<br />textile and custom scale.
                 </div>
               </div>
             </div>
 
             {/* Customization Options Side */}
-            <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-between">
+            <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-between bg-[#fbf9f4]">
               <div className="space-y-8">
                 {/* 1. Wood Selection */}
                 <div>
-                  <h4 className="text-xs uppercase tracking-wider font-mono font-bold mb-4 flex items-center gap-2 text-black/50">
+                  <h4 className="text-xs uppercase tracking-wider font-mono font-bold mb-4 flex items-center gap-2 text-[#8b5a2b]">
                     <span>01.</span> Wood Finish Selection
                   </h4>
                   <div className="space-y-3">
@@ -613,8 +628,8 @@ export default function Page() {
                         onClick={() => setSelectedWood(wood.id)}
                         className={`w-full flex items-center justify-between p-4 rounded-xl border text-left transition-all duration-300 ${
                           selectedWood === wood.id 
-                            ? 'border-[#1c1a1a] bg-[#1c1a1a]/5 shadow-sm' 
-                            : 'border-black/5 hover:border-black/20 bg-white'
+                            ? 'border-[#d4af37] bg-[#4a3525]/5 shadow-sm' 
+                            : 'border-black/5 hover:border-[#4a3525]/30 bg-white'
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -624,10 +639,10 @@ export default function Page() {
                           />
                           <div>
                             <span className="font-bold text-sm block">{wood.name}</span>
-                            <span className="text-xs text-[#1c1a1a]/50 block">{wood.desc}</span>
+                            <span className="text-xs text-[#121110]/50 block">{wood.desc}</span>
                           </div>
                         </div>
-                        <span className="text-xs font-mono font-bold">
+                        <span className="text-xs font-mono font-bold text-[#8b5a2b]">
                           +{wood.cost > 0 ? `$${wood.cost}` : 'Free'}
                         </span>
                       </button>
@@ -637,7 +652,7 @@ export default function Page() {
 
                 {/* 2. Fabric Selection */}
                 <div>
-                  <h4 className="text-xs uppercase tracking-wider font-mono font-bold mb-4 flex items-center gap-2 text-black/50">
+                  <h4 className="text-xs uppercase tracking-wider font-mono font-bold mb-4 flex items-center gap-2 text-[#8b5a2b]">
                     <span>02.</span> Textile Selection
                   </h4>
                   <div className="space-y-3">
@@ -647,8 +662,8 @@ export default function Page() {
                         onClick={() => setSelectedFabric(fabric.id)}
                         className={`w-full flex items-center justify-between p-4 rounded-xl border text-left transition-all duration-300 ${
                           selectedFabric === fabric.id 
-                            ? 'border-[#1c1a1a] bg-[#1c1a1a]/5 shadow-sm' 
-                            : 'border-black/5 hover:border-black/20 bg-white'
+                            ? 'border-[#d4af37] bg-[#4a3525]/5 shadow-sm' 
+                            : 'border-black/5 hover:border-[#4a3525]/30 bg-white'
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -658,10 +673,10 @@ export default function Page() {
                           />
                           <div>
                             <span className="font-bold text-sm block">{fabric.name}</span>
-                            <span className="text-xs text-[#1c1a1a]/50 block">{fabric.desc}</span>
+                            <span className="text-xs text-[#121110]/50 block">{fabric.desc}</span>
                           </div>
                         </div>
-                        <span className="text-xs font-mono font-bold">
+                        <span className="text-xs font-mono font-bold text-[#8b5a2b]">
                           +{fabric.cost > 0 ? `$${fabric.cost}` : 'Free'}
                         </span>
                       </button>
@@ -671,15 +686,15 @@ export default function Page() {
 
                 {/* 3. Custom Sizing Sliders */}
                 <div>
-                  <h4 className="text-xs uppercase tracking-wider font-mono font-bold mb-4 flex items-center gap-2 text-black/50">
+                  <h4 className="text-xs uppercase tracking-wider font-mono font-bold mb-4 flex items-center gap-2 text-[#8b5a2b]">
                     <span>03.</span> Scale & Custom Dimensions
                   </h4>
-                  <div className="space-y-6 bg-white border border-black/5 p-6 rounded-2xl">
+                  <div className="space-y-6 bg-white border border-[#4a3525]/5 p-6 rounded-2xl">
                     {/* Width slider */}
                     <div>
                       <div className="flex justify-between text-xs font-mono mb-2">
                         <span>Width (Length)</span>
-                        <span className="font-bold text-black">{customWidth} cm</span>
+                        <span className="font-bold text-[#8b5a2b]">{customWidth} cm</span>
                       </div>
                       <input 
                         type="range" 
@@ -687,7 +702,7 @@ export default function Page() {
                         max={customizingProduct.dimensions.maxW} 
                         value={customWidth} 
                         onChange={(e) => setCustomWidth(parseInt(e.target.value))}
-                        className="w-full accent-black bg-black/10 rounded-lg appearance-none h-1.5 cursor-pointer"
+                        className="w-full accent-[#d4af37] bg-black/10 rounded-lg appearance-none h-1.5 cursor-pointer"
                       />
                       <div className="flex justify-between text-[10px] text-black/30 font-mono mt-1">
                         <span>Min: {customizingProduct.dimensions.minW}cm</span>
@@ -700,7 +715,7 @@ export default function Page() {
                     <div>
                       <div className="flex justify-between text-xs font-mono mb-2">
                         <span>Depth (Width)</span>
-                        <span className="font-bold text-black">{customDepth} cm</span>
+                        <span className="font-bold text-[#8b5a2b]">{customDepth} cm</span>
                       </div>
                       <input 
                         type="range" 
@@ -708,7 +723,7 @@ export default function Page() {
                         max={customizingProduct.dimensions.maxD} 
                         value={customDepth} 
                         onChange={(e) => setCustomDepth(parseInt(e.target.value))}
-                        className="w-full accent-black bg-black/10 rounded-lg appearance-none h-1.5 cursor-pointer"
+                        className="w-full accent-[#d4af37] bg-black/10 rounded-lg appearance-none h-1.5 cursor-pointer"
                       />
                       <div className="flex justify-between text-[10px] text-black/30 font-mono mt-1">
                         <span>Min: {customizingProduct.dimensions.minD}cm</span>
@@ -720,10 +735,10 @@ export default function Page() {
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-black/10">
+              <div className="mt-8 pt-6 border-t border-[#4a3525]/10">
                 <button 
                   onClick={handleAddInquiry}
-                  className="w-full bg-[#1c1a1a] text-white rounded-full py-4 text-xs font-mono tracking-widest uppercase hover:bg-black transition-all duration-300 flex items-center justify-center gap-2 shadow-lg"
+                  className="w-full bg-[#121110] text-[#d4af37] border border-[#d4af37] rounded-full py-4 text-xs font-mono tracking-widest uppercase hover:bg-[#1a1410] transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-black/10"
                 >
                   <Plus className="w-4 h-4" />
                   Add to Custom Inquiries
@@ -738,17 +753,17 @@ export default function Page() {
       {/* PERSISTENT INQUIRIES DRAWER */}
       {isMounted && isDrawerOpen && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-lg bg-[#fcfaf7] h-full shadow-2xl p-8 flex flex-col justify-between overflow-y-auto">
+          <div className="w-full max-w-lg bg-[#fcfaf7] h-full shadow-2xl p-8 flex flex-col justify-between overflow-y-auto border-l border-[#d4af37]/20">
             <div>
               {/* Header */}
-              <div className="flex justify-between items-center border-b border-black/10 pb-6 mb-6">
+              <div className="flex justify-between items-center border-b border-[#4a3525]/10 pb-6 mb-6">
                 <div>
                   <h3 className="text-2xl font-light font-amharic-bold">Bespoke Inquiries</h3>
-                  <p className="text-xs text-[#1c1a1a]/40 uppercase tracking-widest font-mono mt-1">Estimations & Custom Builds</p>
+                  <p className="text-xs text-[#8b5a2b] uppercase tracking-widest font-mono mt-1">Estimations & Custom Builds</p>
                 </div>
                 <button 
                   onClick={() => setIsDrawerOpen(false)}
-                  className="bg-black/5 hover:bg-black/10 text-black p-2.5 rounded-full transition-colors"
+                  className="bg-[#4a3525]/10 hover:bg-[#4a3525]/20 text-[#4a3525] p-2.5 rounded-full transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -757,7 +772,7 @@ export default function Page() {
               {/* Inquiry list */}
               {inquiries.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 text-center text-black/40">
-                  <Sliders className="w-12 h-12 stroke-[1.2] mb-4" />
+                  <Sliders className="w-12 h-12 stroke-[1.2] mb-4 text-[#8b5a2b]" />
                   <p className="font-light">No custom designs configured yet.</p>
                   <button 
                     onClick={() => {
@@ -765,7 +780,7 @@ export default function Page() {
                       setActiveCategory('all');
                       window.scrollTo({ top: 800, behavior: 'smooth' });
                     }}
-                    className="text-[#1c1a1a] underline text-xs tracking-widest uppercase font-bold mt-4"
+                    className="text-[#8b5a2b] hover:text-[#d4af37] underline text-xs tracking-widest uppercase font-bold mt-4"
                   >
                     Browse Collections
                   </button>
@@ -775,7 +790,7 @@ export default function Page() {
                   {inquiries.map((item) => (
                     <div 
                       key={item.id} 
-                      className="bg-white border border-black/5 p-5 rounded-2xl relative flex gap-4 group hover:border-black/15 transition-all duration-300"
+                      className="bg-white border border-[#4a3525]/10 p-5 rounded-2xl relative flex gap-4 group hover:border-[#d4af37]/50 transition-all duration-300"
                     >
                       <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-50 flex-shrink-0 border border-black/5">
                         <img 
@@ -789,11 +804,11 @@ export default function Page() {
                       <div className="flex-grow">
                         <h4 className="font-bold text-sm tracking-tight">{item.product.name}</h4>
                         <div className="text-[10px] space-y-1 mt-2 text-black/60 font-mono">
-                          <p>• Wood: <span className="text-black font-semibold">{item.wood.name}</span></p>
-                          <p>• Textile: <span className="text-black font-semibold">{item.fabric.name}</span></p>
-                          <p>• Sizing: <span className="text-black font-semibold">{item.width}w × {item.depth}d cm</span></p>
+                          <p>• Wood: <span className="text-[#8b5a2b] font-semibold">{item.wood.name}</span></p>
+                          <p>• Textile: <span className="text-[#8b5a2b] font-semibold">{item.fabric.name}</span></p>
+                          <p>• Sizing: <span className="text-[#8b5a2b] font-semibold">{item.width}w × {item.depth}d cm</span></p>
                         </div>
-                        <div className="text-sm font-semibold tracking-wider font-mono mt-3">
+                        <div className="text-sm font-semibold tracking-wider font-mono mt-3 text-[#d4af37]">
                           Est: ${item.totalPrice}
                         </div>
                       </div>
@@ -813,15 +828,15 @@ export default function Page() {
 
             {/* Bottom Actions and Inquiry form triggers */}
             {inquiries.length > 0 && (
-              <div className="border-t border-black/10 pt-6 mt-6">
+              <div className="border-t border-[#4a3525]/10 pt-6 mt-6">
                 <div className="flex justify-between items-center mb-6">
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest text-black/40 font-mono">Total Estimated Valuation</span>
-                    <span className="text-2xl font-bold tracking-tight font-mono text-black block">
+                    <span className="text-[10px] uppercase tracking-widest text-[#8b5a2b] font-mono">Total Estimated Valuation</span>
+                    <span className="text-2xl font-bold tracking-tight font-mono text-[#d4af37] block">
                       ${inquiries.reduce((sum, item) => sum + item.totalPrice, 0)}
                     </span>
                   </div>
-                  <span className="text-[10px] text-[#1c1a1a]/50 text-right font-mono max-w-[150px]">
+                  <span className="text-[10px] text-[#8b5a2b]/70 text-right font-mono max-w-[150px]">
                     Estimates exclude freight taxes. Subject to showroom alignment.
                   </span>
                 </div>
@@ -829,19 +844,19 @@ export default function Page() {
                 {!showInquiryForm ? (
                   <button 
                     onClick={() => setShowInquiryForm(true)}
-                    className="w-full bg-[#1c1a1a] hover:bg-black text-white text-xs tracking-widest uppercase py-4 rounded-full font-mono font-bold shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                    className="w-full bg-[#121110] hover:bg-[#1a1410] text-[#d4af37] border border-[#d4af37]/50 text-xs tracking-widest uppercase py-4 rounded-full font-mono font-bold shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
                   >
                     <ClipboardCheck className="w-4 h-4" />
                     Submit Configuration Inquiry
                   </button>
                 ) : (
-                  <form onSubmit={handleFormSubmit} className="space-y-4 border-t border-black/5 pt-6 animate-fade-in">
+                  <form onSubmit={handleFormSubmit} className="space-y-4 border-t border-[#4a3525]/10 pt-6 animate-fade-in">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs uppercase tracking-widest font-mono text-black/60 font-bold">Contact Representative</span>
+                      <span className="text-xs uppercase tracking-widest font-mono text-[#8b5a2b] font-bold">Contact Representative</span>
                       <button 
                         type="button"
                         onClick={() => setShowInquiryForm(false)}
-                        className="text-xs font-mono text-black/50 underline"
+                        className="text-xs font-mono text-[#8b5a2b] underline hover:text-[#d4af37]"
                       >
                         Back to List
                       </button>
@@ -863,7 +878,7 @@ export default function Page() {
                           placeholder="Your Complete Name" 
                           value={clientName}
                           onChange={(e) => setClientName(e.target.value)}
-                          className="w-full bg-white border border-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1c1a1a]"
+                          className="w-full bg-white border border-[#4a3525]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#d4af37]"
                         />
                         <input 
                           type="tel" 
@@ -871,7 +886,7 @@ export default function Page() {
                           placeholder="Your Mobile Phone Number" 
                           value={clientPhone}
                           onChange={(e) => setClientPhone(e.target.value)}
-                          className="w-full bg-white border border-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1c1a1a]"
+                          className="w-full bg-white border border-[#4a3525]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#d4af37]"
                         />
                         <input 
                           type="email" 
@@ -879,22 +894,22 @@ export default function Page() {
                           placeholder="Your Email Address" 
                           value={clientEmail}
                           onChange={(e) => setClientEmail(e.target.value)}
-                          className="w-full bg-white border border-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1c1a1a]"
+                          className="w-full bg-white border border-[#4a3525]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#d4af37]"
                         />
                         <textarea 
                           placeholder="Architectural custom notes, preferences or specific wood queries (Optional)" 
                           value={clientNotes}
                           onChange={(e) => setClientNotes(e.target.value)}
                           rows={3}
-                          className="w-full bg-white border border-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1c1a1a] resize-none"
+                          className="w-full bg-white border border-[#4a3525]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#d4af37] resize-none"
                         />
                         <button 
                           type="submit"
                           disabled={isSubmitting}
-                          className="w-full bg-[#1c1a1a] text-white py-4 text-xs font-mono tracking-widest uppercase rounded-full hover:bg-black transition-all duration-300 font-bold flex items-center justify-center gap-2"
+                          className="w-full bg-[#d4af37] text-[#121110] hover:bg-[#cfa253] border border-[#b8952d] py-4 text-xs font-mono tracking-widest uppercase rounded-full transition-all duration-300 font-bold flex items-center justify-center gap-2"
                         >
                           {isSubmitting ? (
-                            <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                            <span className="h-4 w-4 border-2 border-[#121110]/30 border-t-[#121110] rounded-full animate-spin"></span>
                           ) : 'Finalize & Request Quotation'}
                         </button>
                       </>
@@ -905,6 +920,8 @@ export default function Page() {
             )}
           </div>
         </div>
+      )}
+        </>
       )}
     </main>
   );

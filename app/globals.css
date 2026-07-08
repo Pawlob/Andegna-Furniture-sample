@@ -9,9 +9,9 @@
 }
 
 body {
-  background-color: #f4f4f4;
+  background-color: #fcfaf7;
   font-family: 'PP Neue Montreal', Arial, sans-serif;
-  color: #201d1d;
+  color: #121110;
   font-weight: 400;
   margin: 0;
   padding: 0;
@@ -48,7 +48,7 @@ main:has(.willem-header.is--loading) {
 }
 
 .willem-loader {
-  color: #201d1d;
+  color: #121110;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -259,7 +259,8 @@ main:has(.willem-header.is--loading) {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.osmo-credits__p-a { color: #f4f4f4; }
+.osmo-credits__p-a { color: #d4af37; transition: color 0.3s ease; }
+.osmo-credits__p-a:hover { color: #cfa253; }
 
 @media screen and (max-width: 991px) {
   .osmo-credits__p { display: none; }
