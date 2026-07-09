@@ -206,6 +206,7 @@ export default function App() {
     const headingEnd = container.querySelectorAll(".willem__h1-end");
     const coverImageExtra = container.querySelectorAll(".willem__cover-image-extra");
     const headerLetter = container.querySelectorAll(".willem__letter-white");
+    const navLinks = container.querySelectorAll(".willen-nav a, .osmo-credits__p");
 
     const tl = gsap.timeline({
       defaults: { ease: "expo.inOut" },
@@ -268,12 +269,24 @@ export default function App() {
     }, "<");
 
     if (headerLetter.length > 0) {
+      // Set the container opacity to 1 so the slide-up of white letters can be seen
+      gsap.set(".willem-header__content", { opacity: 1 });
+
       tl.from(headerLetter, { 
         yPercent: 100, 
         duration: 1.25, 
         ease: "expo.out", 
         stagger: 0.025 
       }, "< 1.2");
+    }
+
+    if (navLinks.length > 0) {
+      tl.from(navLinks, {
+        yPercent: 100,
+        duration: 1.25,
+        ease: "expo.out",
+        stagger: 0.1
+      }, "<");
     }
   }, { scope: containerRef });
 
@@ -307,10 +320,11 @@ export default function App() {
         />
       </div>
 
-      {/* Preloader Layer */}
-      {!animationComplete && (
-        <section className="fixed inset-0 z-[100] willem-header" ref={containerRef}>
-          <div className="willem-loader">
+      {/* Preloader & Overlay Layer */}
+      <section className="fixed inset-0 z-[50] willem-header pointer-events-none" ref={containerRef}>
+        {/* Loader panel (blocks interaction during loading/intro animation) */}
+        {!animationComplete && (
+          <div className="willem-loader pointer-events-auto">
             <div className="willem__h1">
               <div className="willem__h1-start">
                 <span className="willem__letter font-amharic-bold">አ</span>
@@ -349,8 +363,27 @@ export default function App() {
               </div>
             )}
           </div>
-        </section>
-      )}
+        )}
+
+        {/* Video Overlay Content Layer (permanently overlayed over the video canvas) */}
+        <div className="willem-header__content pointer-events-none">
+          <div className="willem-header__top" />
+          <div className="willem-header__bottom pointer-events-auto">
+            <div className="select-none overflow-hidden flex items-end">
+              <img 
+                src="https://andegnafurniture.com/wp-content/uploads/2022/07/logo-final.png" 
+                alt="Andegna Furniture" 
+                className="willem__letter-white h-[9rem] md:h-[12rem] w-auto object-contain block" 
+                style={{ filter: "none", marginTop: "0px", marginRight: "0px", marginBottom: "-62px" }}
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <p className="osmo-credits__p font-amharic-light text-white/60">
+              ንድፍ በ <a href="#" className="osmo-credits__p-a text-white hover:underline">ጳውሎስ</a>
+            </p>
+          </div>
+        </div>
+      </section>
 
 
     </div>
