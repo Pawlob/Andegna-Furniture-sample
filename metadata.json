@@ -1,6 +1,6 @@
 {
-  "name": "Andegna Furniture",
-  "description": "Premium handcrafted furniture combining modern design with cultural heritage.",
+  "name": "Blank Webpage",
+  "description": "A clean, blank canvas ready for your custom layouts and features.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
